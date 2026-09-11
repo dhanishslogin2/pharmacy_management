@@ -59,6 +59,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Custom Application Stylesheet -->
-    <link rel="stylesheet" href="<?php echo base_url('assets/css/custom.css'); ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/custom.css?v=20260911-sidebar'); ?>">
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased font-sans flex flex-col min-h-screen">

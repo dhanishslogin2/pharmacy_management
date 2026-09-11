@@ -279,6 +279,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <!-- Actions -->
                             <td class="py-3.5 text-end pr-5">
                                 <div class="flex items-center justify-end gap-1.5">
+                                    <?php if ($is_expired): ?>
+                                    <form action="<?php echo base_url('expiry/delete/' . $med['id']); ?>" method="POST" class="d-inline" onsubmit="return confirm('Remove this expired medicine and all linked records permanently?');">
+                                        <button type="submit"
+                                                class="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-rose-600 hover:text-white hover:bg-rose-600 rounded-lg transition border border-rose-200 bg-rose-50 text-xs font-semibold"
+                                                title="Remove Expired Medicine">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                            <span>Remove</span>
+                                        </button>
+                                    </form>
+                                    <?php else: ?>
                                     <a href="<?php echo base_url('medicines/edit/' . $med['id']); ?>" 
                                        class="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition" 
                                        title="Edit Medicine / Batch Details">
@@ -289,6 +299,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                        title="View Full Medicine Profile">
                                         <i class="fa-solid fa-eye"></i>
                                     </a>
+                                    <?php endif; ?>
                                 </div>
                             </td>
                         </tr>

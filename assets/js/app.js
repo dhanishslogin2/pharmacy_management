@@ -68,6 +68,14 @@ document.addEventListener('DOMContentLoaded', function () {
   const sidebarToggle = document.getElementById('sidebar-toggle');
   const sidebarClose = document.getElementById('sidebar-close');
   const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+  const sidebarNavigation = document.getElementById('sidebar-navigation');
+
+  if (sidebarNavigation) {
+    const activeLink = sidebarNavigation.querySelector('.nav-link-custom.active');
+    if (activeLink) {
+      activeLink.scrollIntoView({ block: 'nearest', behavior: 'auto' });
+    }
+  }
 
   function openSidebar() {
     if (sidebar) sidebar.classList.add('mobile-open');
@@ -280,5 +288,3 @@ function initTableInstantSearch() {
     });
   });
 }
-
-

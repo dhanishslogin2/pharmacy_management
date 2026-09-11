@@ -8,12 +8,12 @@ $current_menu = isset($active_menu) ? $active_menu : $this->uri->segment(1, 'das
 <div id="sidebar-backdrop"></div>
 
 <!-- Admin Sidebar Navigation -->
-<aside id="sidebar" class="bg-white border-r border-slate-200 flex flex-col justify-between shadow-sm">
+<aside id="sidebar" class="bg-white border-r border-slate-200 flex flex-col shadow-sm">
     <!-- Brand Header -->
-    <div>
-        <div class="h-[70px] flex items-center justify-between px-5 border-b border-slate-100 bg-white">
-            <a href="<?php echo base_url('dashboard'); ?>" class="flex items-center gap-3 text-decoration-none group">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-700 to-emerald-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform duration-200">
+    <div class="sidebar-main">
+        <div id="sidebar-header" class="h-[70px] flex items-center justify-between px-5 border-b border-slate-100 bg-white">
+            <a href="<?php echo base_url('dashboard'); ?>" class="sidebar-brand flex items-center gap-3 text-decoration-none group">
+                <div class="sidebar-brand-mark w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-700 to-emerald-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform duration-200">
                     <i class="fa-solid fa-staff-snake text-xl"></i>
                 </div>
                 <div>
@@ -26,13 +26,13 @@ $current_menu = isset($active_menu) ? $active_menu : $this->uri->segment(1, 'das
             </a>
             
             <!-- Mobile Close Button -->
-            <button id="sidebar-close" class="lg:hidden p-2 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 focus:outline-none" aria-label="Close Sidebar">
+            <button id="sidebar-close" class="sidebar-close lg:hidden p-2 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 focus:outline-none" aria-label="Close Sidebar">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
         </div>
 
         <!-- Navigation Menu -->
-        <div class="px-3 py-4 space-y-1 overflow-y-auto max-h-[calc(100vh-190px)]">
+        <div id="sidebar-navigation" class="px-2 py-3 space-y-0">
             <div class="px-3 pb-2 text-[11px] font-bold uppercase tracking-wider text-slate-400">
                 Main Menu
             </div>
@@ -52,7 +52,7 @@ $current_menu = isset($active_menu) ? $active_menu : $this->uri->segment(1, 'das
                 <span class="nav-icon w-5 text-center text-base">
                     <i class="fa-solid fa-cart-flatbed"></i>
                 </span>
-                <span>Customer Purchases</span>
+                <span>Sales</span>
             </a>
 
             <!-- 3. Medicines -->

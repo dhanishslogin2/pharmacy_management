@@ -95,6 +95,65 @@ class Expiry_model extends CI_Model {
     }
 
     /**
+     * Remove a medicine only when its expiry date is before today.
+     *
+     * @param int $medicine_id
+     * @return array
+     */
+    public function delete_expired_medicine($medicine_id) {
+        $medicine_id = (int) $medicine_id;
+        if ($medicine_id <= 0) {
+            return array('status' => FALSE, 'message' => 'Invalid medicine selected.');
+        }
+
+        $medicine = $this->db
+            ->select('id, medicine_name, expiry_date')
+            ->where('id', $medicine_id)
+            ->get('medicines')
+            ->row();
+
+        if (!$medicine) {
+            return array('status' => FALSE, 'message' => 'Medicine not found or already removed.');
+        }
+
+        if (empty($medicine->expiry_date) || $medicine->expiry_date >= date('Y-m-d')) {
+            return array('status' => FALSE, 'message' => 'Only expired medicines can be removed.');
+        }
+
+        $this->db->trans_start();
+        $sale_items = $this->db
+            ->select('DISTINCT sale_id', FALSE)
+            ->where('medicine_id', $medicine_id)
+            ->get('sale_items')
+            ->result();
+        $this->db->where('medicine_id', $medicine_id)->delete('sale_items');
+
+        foreach ($sale_items as $sale_item) {
+            $remaining_items = $this->db
+                ->where('sale_id', (int) $sale_item->sale_id)
+                ->count_all_results('sale_items');
+            if ($remaining_items === 0) {
+                $this->db->where('id', (int) $sale_item->sale_id)->delete('sales');
+            }
+        }
+
+        $this->db->where('medicine_id', $medicine_id)->delete('stock_purchases');
+        $this->db->where('medicine_id', $medicine_id)->delete('stocks');
+        $this->db->where('medicine_id', $medicine_id)->delete('stock_history');
+        $this->db->where('id', $medicine_id)->delete('medicines');
+        $this->db->trans_complete();
+
+        if (!$this->db->trans_status()) {
+            return array('status' => FALSE, 'message' => 'Unable to remove the expired medicine.');
+        }
+
+        return array(
+            'status' => TRUE,
+            'message' => 'Expired medicine "' . $medicine->medicine_name . '" was removed.'
+        );
+    }
+
+    /**
      * Get paginated list of EXPIRING medicines within X days (e.g. 7 or 30 days)
      *
      * @param int $days Number of threshold days

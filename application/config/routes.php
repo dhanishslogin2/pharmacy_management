@@ -87,6 +87,7 @@ $route['sales/(:any)']          = 'sales/$1';
 $route['customer-purchases']    = 'sales/index';
 
 $route['expiry']                       = 'expiry/index';
+$route['expiry/delete/(:num)']          = 'expiry/delete/$1';
 $route['expiry/expired']               = 'expiry/expired';
 $route['expiry/expiring-30-days']       = 'expiry/expiring_30_days';
 $route['expiry/expiring-7-days']        = 'expiry/expiring_7_days';

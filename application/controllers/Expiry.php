@@ -88,6 +88,23 @@ class Expiry extends MY_Controller {
     }
 
     /**
+     * Remove an expired medicine and its linked records.
+     *
+     * @param int $id
+     */
+    public function delete($id) {
+        if ($this->input->method() !== 'post') {
+            $this->session->set_flashdata('error', 'Please use the Remove button to delete an expired medicine.');
+            redirect('expiry');
+            return;
+        }
+
+        $result = $this->Expiry_model->delete_expired_medicine($id);
+        $this->session->set_flashdata($result['status'] ? 'success' : 'error', $result['message']);
+        redirect('expiry?filter=expired');
+    }
+
+    /**
      * Dedicated View: Expired Medicines (expiry_date < CURRENT_DATE)
      */
     public function expired() {

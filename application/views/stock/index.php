@@ -126,7 +126,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                     <div>
                                         <p class="font-bold text-slate-900 mb-0 text-xs sm:text-sm leading-snug">
+                                            <a href="<?php echo base_url('stock-history?search=' . urlencode($inv['medicine_name'])); ?>" class="text-slate-900 hover:text-emerald-700 text-decoration-none" title="View all stock additions and deductions">
                                             <?php echo html_escape($inv['medicine_name']); ?>
+                                            </a>
                                         </p>
                                         <span class="text-[10px] text-slate-400">ID #<?php echo $inv['id']; ?></span>
                                     </div>
@@ -191,7 +193,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </a>
                                     <a href="<?php echo base_url('stock-history?search=' . urlencode($inv['medicine_name'])); ?>"
                                        class="btn btn-sm btn-light p-1.5 rounded-lg text-slate-500 hover:text-purple-600 hover:bg-purple-50 border border-slate-200"
-                                       title="View Purchase History">
+                                       title="View all stock additions and deductions">
                                         <i class="fa-solid fa-clock-rotate-left text-xs"></i>
                                     </a>
                                     <a href="<?php echo base_url('medicines/edit/' . $inv['id']); ?>"
@@ -227,6 +229,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             Showing <span class="font-bold text-slate-800"><?php echo count($inventory_list ?? []); ?></span> of
             <span class="font-bold text-slate-800"><?php echo number_format($inv_total ?? 0); ?></span> medicines
         </div>
+        <?php if (($inv_total ?? 0) > 10): ?>
+            <div><?php echo $inv_pagination_links ?? ''; ?></div>
+        <?php endif; ?>
         <div class="flex items-center gap-4 text-[11px] text-slate-400">
             <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> In Stock</span>
             <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span> Low Stock (≤10)</span>

@@ -22,7 +22,7 @@ class Sales extends MY_Controller {
         $this->load->helper(array('url', 'form'));
 
         $this->active_menu = 'sales';
-        $this->page_title = 'Customer Purchases & Sales';
+        $this->page_title = ' Purchases & Sales';
     }
 
     /**

@@ -13,6 +13,60 @@ class Stock_model extends CI_Model {
     }
 
     /**
+     * Remove catalog medicines that have never had a stock purchase.
+     *
+     * @return int Number of medicines removed
+     */
+    public function remove_never_purchased_medicines() {
+        $never_purchased = $this->db
+            ->select('m.id')
+            ->from('medicines m')
+            ->where('NOT EXISTS (SELECT 1 FROM stock_purchases sp WHERE sp.medicine_id = m.id)', NULL, FALSE)
+            ->get()
+            ->result();
+
+        if (empty($never_purchased)) {
+            return 0;
+        }
+
+        $medicine_ids = array();
+        foreach ($never_purchased as $medicine) {
+            $medicine_ids[] = (int) $medicine->id;
+        }
+
+        $this->db->trans_start();
+
+        $sale_items = $this->db
+            ->select('DISTINCT sale_id', FALSE)
+            ->where_in('medicine_id', $medicine_ids)
+            ->get('sale_items')
+            ->result();
+        $this->db->where_in('medicine_id', $medicine_ids)->delete('sale_items');
+
+        foreach ($sale_items as $sale_item) {
+            $remaining_items = $this->db
+                ->where('sale_id', (int) $sale_item->sale_id)
+                ->count_all_results('sale_items');
+            if ($remaining_items === 0) {
+                $this->db->where('id', (int) $sale_item->sale_id)->delete('sales');
+            }
+        }
+
+        $this->db->where_in('medicine_id', $medicine_ids)->delete('stocks');
+        $this->db->where_in('medicine_id', $medicine_ids)->delete('stock_history');
+        $this->db->where_in('id', $medicine_ids)->delete('medicines');
+
+        $this->db->trans_complete();
+
+        if (!$this->db->trans_status()) {
+            log_message('error', 'Stock_model failed to remove never-purchased medicines.');
+            return 0;
+        }
+
+        return count($medicine_ids);
+    }
+
+    /**
      * Get paginated list of stock purchases with joined medicine details and current stock
      *
      * @param int $limit
@@ -356,13 +410,13 @@ class Stock_model extends CI_Model {
                 m.status,
                 c.name as category_name,
                 MAX(sp.purchase_date) as last_purchase_date,
+                MAX(sp.created_at) as latest_added_at,
                 SUM(sp.quantity) as total_purchased,
-                s.name as last_supplier_name,
-                sp.purchase_price as last_unit_price
+                s.name as last_supplier_name
             ');
             $this->db->from('medicines m');
             $this->db->join('categories c', 'c.id = m.category_id', 'left');
-            $this->db->join('stock_purchases sp', 'sp.medicine_id = m.id', 'left');
+            $this->db->join('stock_purchases sp', 'sp.medicine_id = m.id', 'inner');
             $this->db->join('suppliers s', 's.id = sp.supplier_id', 'left');
             $this->db->where('m.status', 'active');
 
@@ -375,8 +429,11 @@ class Stock_model extends CI_Model {
                 $this->db->group_end();
             }
 
-            $this->db->group_by('m.id, m.medicine_name, m.stock_quantity, m.price, m.image_url, m.status, c.name, sp.purchase_price');
-            $this->db->order_by('m.stock_quantity', 'ASC');
+            // One row per medicine and supplier; all purchases for that pair are accumulated.
+            $this->db->group_by('m.id, m.medicine_name, m.stock_quantity, m.price, m.image_url, m.status, c.name, sp.supplier_id, s.name');
+            // Show the medicine whose stock purchase was added most recently first.
+            $this->db->order_by('latest_added_at', 'DESC');
+            $this->db->order_by('m.id', 'DESC');
             $this->db->limit((int) $limit, (int) $offset);
 
             $query = $this->db->get();
@@ -395,9 +452,11 @@ class Stock_model extends CI_Model {
      */
     public function count_medicine_inventory($search = null) {
         try {
+            $this->db->select('COUNT(DISTINCT CONCAT(m.id, \':\', sp.supplier_id)) AS inventory_count', FALSE);
             $this->db->from('medicines m');
             $this->db->join('categories c', 'c.id = m.category_id', 'left');
-            $this->db->join('suppliers s', 's.id = (SELECT supplier_id FROM stock_purchases WHERE medicine_id = m.id ORDER BY id DESC LIMIT 1)', 'left');
+            $this->db->join('stock_purchases sp', 'sp.medicine_id = m.id', 'inner');
+            $this->db->join('suppliers s', 's.id = sp.supplier_id', 'left');
             $this->db->where('m.status', 'active');
 
             if (!empty($search)) {
@@ -409,7 +468,8 @@ class Stock_model extends CI_Model {
                 $this->db->group_end();
             }
 
-            return (int) $this->db->count_all_results();
+            $row = $this->db->get()->row();
+            return $row ? (int) $row->inventory_count : 0;
         } catch (Exception $e) {
             return 0;
         }

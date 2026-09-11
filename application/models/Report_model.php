@@ -67,7 +67,7 @@ class Report_model extends CI_Model {
                 $this->db->where('DATE(m.created_at) <=', $end_date);
             }
 
-            $this->db->order_by('m.stock_quantity', 'DESC');
+          $this->db->order_by('m.created_at', 'DESC');
             $query = $this->db->get();
             return ($query && $query->num_rows() > 0) ? $query->result_array() : array();
         } catch (Exception $e) {

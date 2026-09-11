@@ -29,6 +29,9 @@ class Stock extends MY_Controller {
      * Read Stock Purchases List with Current Stock Column, Search, and Pagination
      */
     public function index() {
+        // Keep Stock Management limited to medicines with real purchase history.
+        $this->Stock_model->remove_never_purchased_medicines();
+
         $search      = $this->input->get('search', TRUE);
         $supplier_id = $this->input->get('supplier_id', TRUE);
 
@@ -77,6 +80,13 @@ class Stock extends MY_Controller {
         $inv_offset     = ($inv_page > 0) ? ($inv_page - 1) * $per_page : 0;
         $inventory_list = $this->Stock_model->get_medicine_inventory_overview($per_page, $inv_offset, $inv_search);
 
+        $inventory_pagination = $config;
+        $inventory_pagination['base_url'] = base_url('stock');
+        $inventory_pagination['total_rows'] = $inv_total;
+        $inventory_pagination['query_string_segment'] = 'inv_page';
+        $this->pagination->initialize($inventory_pagination);
+        $inventory_pagination_links = $this->pagination->create_links();
+
         $data = array(
             'page_title'       => 'Stock Management',
             'active_menu'      => 'stock',
@@ -94,6 +104,7 @@ class Stock extends MY_Controller {
             'inv_total'        => $inv_total,
             'inv_search'       => $inv_search,
             'inv_offset'       => $inv_offset,
+            'inv_pagination_links' => $inventory_pagination_links,
         );
 
         $this->render_view('stock/index', $data);
