@@ -118,10 +118,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <?php echo (int) $item['quantity']; ?>
                                     </td>
                                     <td class="py-3 text-end font-mono text-slate-700">
-                                        $<?php echo number_format($item['unit_price'], 2); ?>
+                                        ₹<?php echo number_format($item['unit_price'], 2); ?>
                                     </td>
                                     <td class="py-3 text-end pr-3 font-mono font-bold text-slate-900">
-                                        $<?php echo number_format($item['total_price'], 2); ?>
+                                        ₹<?php echo number_format($item['total_price'], 2); ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -146,26 +146,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="space-y-2 text-xs">
                     <div class="flex items-center justify-between text-slate-600">
                         <span>Items Subtotal:</span>
-                        <span class="font-mono font-bold text-slate-900">$<?php echo number_format($sale->subtotal, 2); ?></span>
+                        <span class="font-mono font-bold text-slate-900">₹<?php echo number_format($sale->subtotal, 2); ?></span>
                     </div>
 
                     <?php if ((float)$sale->discount > 0): ?>
                         <div class="flex items-center justify-between text-emerald-700">
                             <span>Discount:</span>
-                            <span class="font-mono font-bold">-$<?php echo number_format($sale->discount, 2); ?></span>
+                            <span class="font-mono font-bold">-₹<?php echo number_format($sale->discount, 2); ?></span>
                         </div>
                     <?php endif; ?>
 
                     <?php if ((float)$sale->tax > 0): ?>
                         <div class="flex items-center justify-between text-slate-600">
                             <span>Tax / GST:</span>
-                            <span class="font-mono font-bold text-slate-900">+$<?php echo number_format($sale->tax, 2); ?></span>
+                            <span class="font-mono font-bold text-slate-900">+₹<?php echo number_format($sale->tax, 2); ?></span>
                         </div>
                     <?php endif; ?>
 
                     <div class="pt-3 border-t border-slate-200 flex items-center justify-between">
                         <span class="text-sm font-bold uppercase tracking-wider text-slate-900">Grand Total:</span>
-                        <span class="text-xl font-extrabold font-mono text-emerald-700">$<?php echo number_format($sale->total_amount, 2); ?></span>
+                        <span class="text-xl font-extrabold font-mono text-emerald-700">₹<?php echo number_format($sale->total_amount, 2); ?></span>
                     </div>
                 </div>
             </div>

@@ -63,7 +63,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
         <div>
             <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-0.5">Total Financial Loss</p>
-            <h3 class="text-xl font-bold text-rose-700 font-mono mb-0">$<?php echo number_format($kpis['expired_value'] ?? 0, 2); ?></h3>
+            <h3 class="text-xl font-bold text-rose-700 font-mono mb-0">₹<?php echo number_format($kpis['expired_value'] ?? 0, 2); ?></h3>
         </div>
     </div>
 </div>
@@ -135,7 +135,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                     <div>
                                         <span class="font-bold text-slate-900 block"><?php echo html_escape($med['medicine_name']); ?></span>
-                                        <span class="text-[11px] text-slate-400 font-mono">$<?php echo number_format($med['price'], 2); ?> / unit</span>
+                                        <span class="text-[11px] text-slate-400 font-mono">₹<?php echo number_format($med['price'], 2); ?> / unit</span>
                                     </div>
                                 </div>
                             </td>
@@ -168,7 +168,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </td>
 
                             <td class="py-3.5 text-end font-mono font-bold text-xs text-rose-700">
-                                -$<?php echo number_format($loss, 2); ?>
+                                -₹<?php echo number_format($loss, 2); ?>
                             </td>
 
                             <td class="py-3.5 text-end pr-5">

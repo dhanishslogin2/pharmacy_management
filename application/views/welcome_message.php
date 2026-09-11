@@ -180,7 +180,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="mt-5 grid grid-cols-3 gap-3 text-center text-xs">
                                     <div class="bg-white/5 border border-white/10 rounded-xl p-3">
                                         <div class="text-emerald-200">Sales</div>
-                                        <div class="mt-2 font-bold text-base">$12.4K</div>
+                                        <div class="mt-2 font-bold text-base">₹12.4K</div>
                                     </div>
                                     <div class="bg-white/5 border border-white/10 rounded-xl p-3">
                                         <div class="text-emerald-200">Orders</div>
@@ -383,4 +383,3 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </footer>
 </body>
 </html>
-

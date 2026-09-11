@@ -60,7 +60,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <h3 class="text-2xl font-extrabold text-rose-600 mb-0"><?php echo number_format($kpis['total_expired'] ?? 0); ?></h3>
         <p class="text-[11px] text-slate-400 mb-0 mt-1 flex items-center justify-between">
             <span><?php echo number_format($kpis['expired_units'] ?? 0); ?> Units</span>
-            <span class="font-bold text-rose-700 font-mono">$<?php echo number_format($kpis['expired_value'] ?? 0, 2); ?> Loss</span>
+            <span class="font-bold text-rose-700 font-mono">₹<?php echo number_format($kpis['expired_value'] ?? 0, 2); ?> Loss</span>
         </p>
     </a>
 
@@ -102,7 +102,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <i class="fa-solid fa-dollar-sign"></i>
             </div>
         </div>
-        <h3 class="text-2xl font-extrabold text-purple-700 font-mono mb-0">$<?php echo number_format($kpis['total_risk_value'] ?? 0, 2); ?></h3>
+        <h3 class="text-2xl font-extrabold text-purple-700 font-mono mb-0">₹<?php echo number_format($kpis['total_risk_value'] ?? 0, 2); ?></h3>
         <p class="text-[11px] text-slate-400 mb-0 mt-1">
             Across <?php echo number_format($kpis['total_risk_units'] ?? 0); ?> total at-risk medicine units
         </p>
@@ -210,7 +210,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                     <div>
                                         <span class="font-bold text-slate-900 block"><?php echo html_escape($med['medicine_name']); ?></span>
-                                        <span class="text-[11px] text-slate-400 font-mono">$<?php echo number_format($med['price'], 2); ?> / unit</span>
+                                        <span class="text-[11px] text-slate-400 font-mono">₹<?php echo number_format($med['price'], 2); ?> / unit</span>
                                     </div>
                                 </div>
                             </td>
@@ -273,7 +273,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                             <!-- Value at Risk -->
                             <td class="py-3.5 text-end font-mono font-bold text-xs <?php echo $is_expired ? 'text-rose-700' : 'text-slate-800'; ?>">
-                                $<?php echo number_format($val, 2); ?>
+                                ₹<?php echo number_format($val, 2); ?>
                             </td>
 
                             <!-- Actions -->

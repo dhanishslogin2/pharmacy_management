@@ -106,7 +106,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                     <div>
                                         <span class="font-bold text-slate-900 block"><?php echo html_escape($med['medicine_name']); ?></span>
-                                        <span class="text-[11px] text-slate-400 font-mono">$<?php echo number_format($med['price'], 2); ?> / unit</span>
+                                        <span class="text-[11px] text-slate-400 font-mono">₹<?php echo number_format($med['price'], 2); ?> / unit</span>
                                     </div>
                                 </div>
                             </td>
@@ -146,7 +146,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </td>
 
                             <td class="py-3.5 text-end font-mono font-bold text-xs text-amber-800">
-                                $<?php echo number_format($val, 2); ?>
+                                ₹<?php echo number_format($val, 2); ?>
                             </td>
 
                             <td class="py-3.5 text-end pr-5">

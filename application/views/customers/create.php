@@ -69,6 +69,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                            value="<?php echo set_value('name'); ?>" 
                            class="form-control text-sm rounded-xl border-slate-200 focus:border-emerald-500 <?php echo form_error('name') ? 'is-invalid' : ''; ?>" 
                            placeholder="e.g. Robert Johnson" 
+                           minlength="2"
+                           maxlength="100"
+                           pattern="[A-Za-z][A-Za-z.'\x20\x2d]*"
                            required 
                            autofocus>
                     <div class="invalid-feedback text-xs">
@@ -87,6 +90,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                            value="<?php echo set_value('email'); ?>" 
                            class="form-control text-sm rounded-xl border-slate-200 focus:border-emerald-500 <?php echo form_error('email') ? 'is-invalid' : ''; ?>" 
                            placeholder="e.g. robert.j@example.com" 
+                           maxlength="254"
                            required>
                     <div class="invalid-feedback text-xs">
                         <?php echo form_error('email') ?: 'Please enter a valid unique email address.'; ?>
@@ -102,11 +106,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <input type="tel" 
                            name="phone" 
                            id="phone" 
-                           value="<?php echo set_value('phone'); ?>" 
+                           value="<?php echo set_value('phone', '+91 '); ?>"
                            class="form-control text-sm rounded-xl border-slate-200 focus:border-emerald-500 <?php echo form_error('phone') ? 'is-invalid' : ''; ?>" 
-                           placeholder="e.g. +1 555-0188">
+                           placeholder="e.g. +91 9876543210"
+                           maxlength="14"
+                           inputmode="tel"
+                           pattern="\+91[ \-]?[6-9][0-9]{9}"
+                           title="Use +91 followed by exactly 10 digits.">
                     <div class="invalid-feedback text-xs">
-                        <?php echo form_error('phone'); ?>
+                        <?php echo form_error('phone') ?: 'Use +91 followed by exactly 10 digits.'; ?>
                     </div>
                 </div>
 
@@ -118,6 +126,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <textarea name="address" 
                               id="address" 
                               rows="3" 
+                              maxlength="255"
                               class="form-control text-sm rounded-xl border-slate-200 focus:border-emerald-500 <?php echo form_error('address') ? 'is-invalid' : ''; ?>" 
                               placeholder="Street address, apartment, city, state, postal code..."><?php echo set_value('address'); ?></textarea>
                     <div class="invalid-feedback text-xs">
@@ -130,7 +139,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <label for="status" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
                         Account Status <span class="text-rose-500">*</span>
                     </label>
-                    <select name="status" id="status" class="form-select text-sm rounded-xl border-slate-200 focus:border-emerald-500">
+                    <select name="status" id="status" class="form-select text-sm rounded-xl border-slate-200 focus:border-emerald-500" required>
                         <option value="active" <?php echo (set_value('status', 'active') === 'active') ? 'selected' : ''; ?>>Active (Eligible for sales & prescriptions)</option>
                         <option value="inactive" <?php echo (set_value('status') === 'inactive') ? 'selected' : ''; ?>>Inactive (Suspended / Archived)</option>
                     </select>

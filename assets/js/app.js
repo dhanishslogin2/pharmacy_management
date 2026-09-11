@@ -133,6 +133,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 3. Form Validation & Submit Loading Spinners
   const forms = document.querySelectorAll('.needs-validation, form');
+  document.querySelectorAll('#createCustomerForm, #editCustomerForm').forEach(customerForm => {
+    const phone = customerForm.querySelector('input[name="phone"]');
+    if (!phone) return;
+
+    const validateCustomerPhone = () => {
+      const value = phone.value.trim();
+      if (value === '') {
+        phone.setCustomValidity('');
+        return;
+      }
+      const valid = /^\+91[ -]?[6-9][0-9]{9}$/.test(value);
+      phone.setCustomValidity(valid ? '' : 'Use +91 and exactly 10 digits.');
+    };
+
+    phone.addEventListener('input', validateCustomerPhone);
+    phone.addEventListener('blur', validateCustomerPhone);
+    validateCustomerPhone();
+  });
+
   forms.forEach(form => {
     form.addEventListener('submit', function (e) {
       if (form.classList.contains('needs-validation')) {

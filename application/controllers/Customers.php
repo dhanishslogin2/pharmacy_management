@@ -229,16 +229,16 @@ class Customers extends MY_Controller {
      * @param int|null $exclude_id
      */
     private function _set_validation_rules($exclude_id = null) {
-        $this->form_validation->set_rules('name', 'Customer Name', 'trim|required|min_length[2]|max_length[100]', array(
+        $this->form_validation->set_rules('name', 'Customer Name', 'trim|required|min_length[2]|max_length[100]|callback_validate_customer_name', array(
             'required' => 'Please enter the %s.'
         ));
         $this->form_validation->set_rules('email', 'Email Address', 'trim|required|valid_email|callback_validate_email_unique[' . $exclude_id . ']', array(
             'required'    => 'Please enter the %s.',
             'valid_email' => 'Please enter a valid email address.'
         ));
-        $this->form_validation->set_rules('phone', 'Phone Number', 'trim|max_length[30]');
-        $this->form_validation->set_rules('address', 'Physical Address', 'trim');
-        $this->form_validation->set_rules('status', 'Account Status', 'trim|in_list[active,inactive]');
+        $this->form_validation->set_rules('phone', 'Phone Number', 'trim|max_length[25]|callback_validate_phone');
+        $this->form_validation->set_rules('address', 'Physical Address', 'trim|max_length[255]|callback_validate_customer_address');
+        $this->form_validation->set_rules('status', 'Account Status', 'trim|required|in_list[active,inactive]');
     }
 
     /**
@@ -252,6 +252,47 @@ class Customers extends MY_Controller {
         $is_unique = $this->Customer_model->is_email_unique($email, $exclude_id);
         if (!$is_unique) {
             $this->form_validation->set_message('validate_email_unique', 'This email address is already registered to another user.');
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+    /**
+     * Validate customer names without allowing numeric or control-only values.
+     */
+    public function validate_customer_name($name) {
+        if (!preg_match("/^[\p{L}][\p{L}\s.'-]*$/u", trim($name))) {
+            $this->form_validation->set_message('validate_customer_name', 'Customer name may contain letters, spaces, apostrophes, periods, and hyphens only.');
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+    /**
+     * Validate an optional Indian mobile number.
+     */
+    public function validate_phone($phone) {
+        $phone = trim($phone);
+        if ($phone === '') {
+            return TRUE;
+        }
+
+        if (!preg_match('/^\+91[ -]?[6-9][0-9]{9}$/', $phone)) {
+            $this->form_validation->set_message('validate_phone', 'Enter a valid Indian mobile number with +91 and exactly 10 digits.');
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+    /**
+     * Reject blank or control-only addresses while keeping the field optional.
+     */
+    public function validate_customer_address($address) {
+        if (trim($address) === '') {
+            return TRUE;
+        }
+        if (!preg_match("/^[\p{L}\p{N}\s.,#'\/-]+$/u", trim($address))) {
+            $this->form_validation->set_message('validate_customer_address', 'Address contains unsupported characters.');
             return FALSE;
         }
         return TRUE;

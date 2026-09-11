@@ -112,6 +112,9 @@ class Customer_model extends CI_Model {
      */
     public function update_customer($id, $data) {
         try {
+            if (!$this->is_valid_customer_data($data)) {
+                return FALSE;
+            }
             $this->db->where('id', (int) $id);
             $this->db->where('role', 'customer');
             return $this->db->update('users', $data);
@@ -165,6 +168,9 @@ class Customer_model extends CI_Model {
      */
     public function create_customer($data) {
         try {
+            if (!$this->is_valid_customer_data($data)) {
+                return FALSE;
+            }
             $data['role'] = 'customer';
             $data['created_at'] = date('Y-m-d H:i:s');
             $data['updated_at'] = date('Y-m-d H:i:s');
@@ -180,5 +186,24 @@ class Customer_model extends CI_Model {
             return FALSE;
         }
     }
-}
 
+    private function is_valid_customer_data($data) {
+            $name = isset($data['name']) ? trim($data['name']) : '';
+            $email = isset($data['email']) ? trim($data['email']) : '';
+            $phone = isset($data['phone']) ? trim($data['phone']) : '';
+            $address = isset($data['address']) ? trim($data['address']) : '';
+            $status = isset($data['status']) ? trim($data['status']) : '';
+
+            if ($name === '' || strlen($name) < 2 || strlen($name) > 100 ||
+                !preg_match("/^[\p{L}][\p{L}\s.'-]*$/u", $name) ||
+                !filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 254 ||
+                ($phone !== '' && !preg_match('/^\+91[ -]?[6-9][0-9]{9}$/', $phone)) ||
+                strlen($address) > 255 ||
+                ($address !== '' && !preg_match("/^[\p{L}\p{N}\s.,#'\/-]+$/u", $address)) ||
+                !in_array($status, array('active', 'inactive'), TRUE)) {
+                log_message('error', 'Customer_model rejected invalid customer data.');
+                return FALSE;
+            }
+            return TRUE;
+    }
+}

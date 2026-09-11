@@ -169,11 +169,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <div class="flex justify-between py-1 border-b border-slate-100">
                         <span class="text-slate-500">Unit Cost:</span>
-                        <span class="font-mono font-bold text-slate-800" id="summaryPrice">$<?php echo number_format($purchase->purchase_price, 2); ?></span>
+                        <span class="font-mono font-bold text-slate-800" id="summaryPrice">₹<?php echo number_format($purchase->purchase_price, 2); ?></span>
                     </div>
                     <div class="flex justify-between py-2 border-t border-slate-200 text-sm">
                         <span class="font-bold text-slate-800">Total Cost:</span>
-                        <span class="font-mono font-extrabold text-emerald-700 text-base" id="summaryTotal">$<?php echo number_format($purchase->total_amount, 2); ?></span>
+                        <span class="font-mono font-extrabold text-emerald-700 text-base" id="summaryTotal">₹<?php echo number_format($purchase->total_amount, 2); ?></span>
                     </div>
                 </div>
 

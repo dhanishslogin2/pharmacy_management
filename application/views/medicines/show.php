@@ -120,7 +120,7 @@ $image_src = !empty($medicine->image_url) ? $medicine->image_url : 'https://imag
                 <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Unit Price</span>
                 <div class="flex items-baseline gap-1.5">
                     <h3 class="text-2xl font-bold text-slate-900 mb-0">
-                        $<?php echo number_format((float)$medicine->price, 2); ?>
+                        ₹<?php echo number_format((float)$medicine->price, 2); ?>
                     </h3>
                     <span class="text-xs text-slate-400">/ unit</span>
                 </div>

@@ -164,7 +164,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                             <!-- Price -->
                             <td class="py-3 text-end font-mono text-xs font-bold text-emerald-700">
-                                $<?php echo number_format((float)$med['price'], 2); ?>
+                                ₹<?php echo number_format((float)$med['price'], 2); ?>
                             </td>
 
                             <!-- Stock Quantity -->

@@ -216,7 +216,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <!-- Subtotal -->
                     <div class="flex items-center justify-between text-xs text-slate-600">
                         <span>Items Subtotal:</span>
-                        <span class="font-mono font-bold text-slate-900" id="displaySubtotal">$0.00</span>
+                        <span class="font-mono font-bold text-slate-900" id="displaySubtotal">₹0.00</span>
                     </div>
 
                     <!-- Discount -->
@@ -252,7 +252,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <!-- Grand Total -->
                     <div class="pt-3 border-t border-slate-200 flex items-center justify-between">
                         <span class="text-xs font-bold uppercase tracking-wider text-slate-800">Grand Total:</span>
-                        <span class="text-lg font-extrabold font-mono text-emerald-700" id="displayGrandTotal">$0.00</span>
+                        <span class="text-lg font-extrabold font-mono text-emerald-700" id="displayGrandTotal">₹0.00</span>
                     </div>
                 </div>
 
@@ -331,7 +331,7 @@ function addMedicineRow() {
     let medOptions = '<option value="">-- Select Medicine --</option>';
     availableMedicines.forEach(m => {
         medOptions += `<option value="${m.id}" data-price="${m.price}" data-stock="${m.stock_quantity}">
-            ${m.medicine_name} (${m.category_name || 'General'}) - $${parseFloat(m.price).toFixed(2)} [Stock: ${m.stock_quantity}]
+            ${m.medicine_name} (${m.category_name || 'General'}) - ₹${parseFloat(m.price).toFixed(2)} [Stock: ${m.stock_quantity}]
         </option>`;
     });
 
@@ -357,7 +357,7 @@ function addMedicineRow() {
             <input type="number" min="1" max="9999" name="quantity[]" class="form-control form-control-sm text-xs text-center font-bold rounded-lg border-slate-200 qty-input" value="1" oninput="calculateRowTotal('${rowId}')" required>
         </td>
         <td class="py-2.5 text-end font-mono font-bold text-slate-800 text-xs line-total">
-            $0.00
+            ₹0.00
         </td>
         <td class="py-2.5 text-center">
             <button type="button" class="btn btn-sm btn-light text-rose-500 hover:bg-rose-50 p-1.5 rounded-lg border-0" title="Remove" onclick="removeMedicineRow('${rowId}')">
@@ -429,7 +429,7 @@ function calculateRowTotal(rowId) {
     }
 
     const total = qty * price;
-    row.querySelector('.line-total').textContent = `$${total.toFixed(2)}`;
+    row.querySelector('.line-total').textContent = `₹${total.toFixed(2)}`;
     calculateTotals();
 }
 
@@ -447,8 +447,8 @@ function calculateTotals() {
     const tax = parseFloat(document.getElementById('taxInput')?.value) || 0.00;
     const grandTotal = Math.max(0.00, subtotal - discount + tax);
 
-    document.getElementById('displaySubtotal').textContent = `$${subtotal.toFixed(2)}`;
-    document.getElementById('displayGrandTotal').textContent = `$${grandTotal.toFixed(2)}`;
+    document.getElementById('displaySubtotal').textContent = `₹${subtotal.toFixed(2)}`;
+    document.getElementById('displayGrandTotal').textContent = `₹${grandTotal.toFixed(2)}`;
 }
 
 function checkWarningVisibility() {

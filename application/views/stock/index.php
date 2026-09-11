@@ -298,7 +298,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </span>
                             </td>
                             <td class="py-3 text-end font-mono text-xs font-bold text-emerald-700">
-                                $<?php echo number_format($total, 2); ?>
+                                ₹<?php echo number_format($total, 2); ?>
                             </td>
                             <td class="py-3 text-xs font-mono text-slate-500">
                                 <?php echo date('M d, Y', strtotime($p['purchase_date'])); ?>

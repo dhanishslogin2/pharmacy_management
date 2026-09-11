@@ -62,7 +62,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
         <div>
             <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Revenue</span>
-            <div class="text-xl font-extrabold text-emerald-700 font-mono">$<?php echo number_format($metrics['total_revenue'] ?? 0.00, 2); ?></div>
+            <div class="text-xl font-extrabold text-emerald-700 font-mono">₹<?php echo number_format($metrics['total_revenue'] ?? 0.00, 2); ?></div>
         </div>
     </div>
 
@@ -82,7 +82,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
         <div>
             <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Today's Revenue</span>
-            <div class="text-xl font-extrabold text-blue-700 font-mono">$<?php echo number_format($metrics['today_revenue'] ?? 0.00, 2); ?></div>
+            <div class="text-xl font-extrabold text-blue-700 font-mono">₹<?php echo number_format($metrics['today_revenue'] ?? 0.00, 2); ?></div>
         </div>
     </div>
 </div>
@@ -222,7 +222,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                             <!-- Total Amount -->
                             <td class="py-3 text-end font-mono font-bold text-slate-900 text-sm">
-                                $<?php echo number_format($s['total_amount'], 2); ?>
+                                ₹<?php echo number_format($s['total_amount'], 2); ?>
                             </td>
 
                             <!-- Actions -->

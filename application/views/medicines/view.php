@@ -63,11 +63,11 @@ $margin_pct = ((float)$medicine->sell_price > 0) ? ($profit / (float)$medicine->
         <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Retail Selling Price</span>
         <div class="flex items-baseline gap-2">
             <h3 class="text-2xl font-bold text-slate-900 mb-0">
-                $<?php echo number_format((float)$medicine->sell_price, 2); ?>
+                ₹<?php echo number_format((float)$medicine->sell_price, 2); ?>
             </h3>
             <span class="text-xs text-slate-400 font-mono">/ unit</span>
         </div>
-        <p class="text-xs text-slate-400 mt-1 mb-0">Cost: $<?php echo number_format((float)$medicine->buy_price, 2); ?></p>
+        <p class="text-xs text-slate-400 mt-1 mb-0">Cost: ₹<?php echo number_format((float)$medicine->buy_price, 2); ?></p>
     </div>
 
     <!-- Profit Margin -->
@@ -77,7 +77,7 @@ $margin_pct = ((float)$medicine->sell_price > 0) ? ($profit / (float)$medicine->
             <h3 class="text-2xl font-bold text-emerald-700 mb-0">
                 <?php echo number_format($margin_pct, 1); ?>%
             </h3>
-            <span class="text-xs text-emerald-600 font-semibold">+$<?php echo number_format($profit, 2); ?></span>
+            <span class="text-xs text-emerald-600 font-semibold">+₹<?php echo number_format($profit, 2); ?></span>
         </div>
         <p class="text-xs text-slate-400 mt-1 mb-0">Markup per unit sold</p>
     </div>

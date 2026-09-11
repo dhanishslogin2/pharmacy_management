@@ -55,7 +55,7 @@ $count_records = is_array($report_data) ? count($report_data) : 0;
             <i class="fa-solid fa-boxes-stacked text-emerald-600 text-xs"></i>
         </div>
         <h4 class="text-lg font-extrabold text-slate-900 mb-0"><?php echo number_format($overview['available_units'] ?? 0); ?> <span class="text-xs font-normal text-slate-400">units</span></h4>
-        <p class="text-[11px] text-emerald-700 font-mono font-bold mb-0 mt-1">$<?php echo number_format($overview['available_valuation'] ?? 0, 2); ?></p>
+        <p class="text-[11px] text-emerald-700 font-mono font-bold mb-0 mt-1">₹<?php echo number_format($overview['available_valuation'] ?? 0, 2); ?></p>
     </a>
 
     <!-- 2. Low Stock -->
@@ -77,7 +77,7 @@ $count_records = is_array($report_data) ? count($report_data) : 0;
             <i class="fa-solid fa-ban text-rose-600 text-xs"></i>
         </div>
         <h4 class="text-lg font-extrabold text-rose-600 mb-0"><?php echo number_format($overview['expired_count'] ?? 0); ?> <span class="text-xs font-normal text-slate-400">items</span></h4>
-        <p class="text-[11px] text-rose-700 font-mono font-bold mb-0 mt-1">-$<?php echo number_format($overview['expired_loss'] ?? 0, 2); ?> Loss</p>
+        <p class="text-[11px] text-rose-700 font-mono font-bold mb-0 mt-1">-₹<?php echo number_format($overview['expired_loss'] ?? 0, 2); ?> Loss</p>
     </a>
 
     <!-- 4. Expiring Soon -->
@@ -317,10 +317,10 @@ document.getElementById('toggleFilterBtn').addEventListener('click', function() 
                                 <td class="py-3 font-bold text-slate-900"><?php echo html_escape($row['medicine_name']); ?></td>
                                 <td class="py-3 text-slate-600"><?php echo html_escape($row['category_name'] ?: 'Unassigned'); ?></td>
                                 <td class="py-3 text-slate-500 text-xs"><?php echo html_escape($row['supplier_name'] ?: 'Direct Supply'); ?></td>
-                                <td class="py-3 text-end font-mono text-slate-800">$<?php echo number_format($row['price'], 2); ?></td>
+                                <td class="py-3 text-end font-mono text-slate-800">₹<?php echo number_format($row['price'], 2); ?></td>
                                 <td class="py-3 text-center font-bold font-mono text-emerald-700"><?php echo number_format($qty); ?></td>
                                 <td class="py-3 font-mono text-xs"><?php echo date('d M Y', strtotime($row['expiry_date'])); ?></td>
-                                <td class="py-3 text-end pr-5 font-mono font-bold text-slate-900">$<?php echo number_format($val, 2); ?></td>
+                                <td class="py-3 text-end pr-5 font-mono font-bold text-slate-900">₹<?php echo number_format($val, 2); ?></td>
                             </tr>
                         <?php endforeach; ?>
                         <!-- Summation Footer Row -->
@@ -328,7 +328,7 @@ document.getElementById('toggleFilterBtn').addEventListener('click', function() 
                             <td colspan="5" class="py-3.5 pl-5 text-slate-800 uppercase text-xs tracking-wider">Total Available Valuation:</td>
                             <td class="py-3.5 text-center font-mono text-emerald-800 text-sm"><?php echo number_format($total_stock_sum); ?> units</td>
                             <td></td>
-                            <td class="py-3.5 text-end pr-5 font-mono text-emerald-800 text-sm">$<?php echo number_format($total_val_sum, 2); ?></td>
+                            <td class="py-3.5 text-end pr-5 font-mono text-emerald-800 text-sm">₹<?php echo number_format($total_val_sum, 2); ?></td>
                         </tr>
                     <?php else: ?>
                         <tr><td colspan="8" class="py-8 text-center text-slate-400">No matching available medicines found.</td></tr>
@@ -375,7 +375,7 @@ document.getElementById('toggleFilterBtn').addEventListener('click', function() 
                                     <span class="font-bold block"><?php echo html_escape($row['supplier_name'] ?: 'N/A'); ?></span>
                                     <span class="text-slate-400 text-[11px]"><?php echo html_escape($row['supplier_phone'] ?: ''); ?></span>
                                 </td>
-                                <td class="py-3 text-end pr-5 font-mono font-bold text-slate-900">$<?php echo number_format($reorder_cost, 2); ?></td>
+                                <td class="py-3 text-end pr-5 font-mono font-bold text-slate-900">₹<?php echo number_format($reorder_cost, 2); ?></td>
                             </tr>
                         <?php endforeach; ?>
                         <!-- Summation Footer Row -->
@@ -383,7 +383,7 @@ document.getElementById('toggleFilterBtn').addEventListener('click', function() 
                             <td colspan="5" class="py-3.5 pl-5 text-slate-800 uppercase text-xs tracking-wider">Total Reorder Estimate:</td>
                             <td class="py-3.5 text-center font-mono text-amber-800 text-sm">+<?php echo number_format($total_reorder_units); ?> units</td>
                             <td></td>
-                            <td class="py-3.5 text-end pr-5 font-mono text-amber-800 text-sm">$<?php echo number_format($total_reorder_cost, 2); ?></td>
+                            <td class="py-3.5 text-end pr-5 font-mono text-amber-800 text-sm">₹<?php echo number_format($total_reorder_cost, 2); ?></td>
                         </tr>
                     <?php else: ?>
                         <tr><td colspan="8" class="py-8 text-center text-slate-400">No low stock items detected below threshold.</td></tr>
@@ -431,7 +431,7 @@ document.getElementById('toggleFilterBtn').addEventListener('click', function() 
                                         <?php echo $row['days_overdue']; ?>d Overdue
                                     </span>
                                 </td>
-                                <td class="py-3 text-end pr-5 font-mono font-bold text-rose-700">-$<?php echo number_format($loss, 2); ?></td>
+                                <td class="py-3 text-end pr-5 font-mono font-bold text-rose-700">-₹<?php echo number_format($loss, 2); ?></td>
                             </tr>
                         <?php endforeach; ?>
                         <!-- Summation Footer Row -->
@@ -439,7 +439,7 @@ document.getElementById('toggleFilterBtn').addEventListener('click', function() 
                             <td colspan="4" class="py-3.5 pl-5 text-slate-800 uppercase text-xs tracking-wider">Total Expired Loss:</td>
                             <td class="py-3.5 text-center font-mono text-rose-800 text-sm"><?php echo number_format($total_expired_units); ?> units</td>
                             <td colspan="2"></td>
-                            <td class="py-3.5 text-end pr-5 font-mono text-rose-800 text-sm">-$<?php echo number_format($total_loss_val, 2); ?></td>
+                            <td class="py-3.5 text-end pr-5 font-mono text-rose-800 text-sm">-₹<?php echo number_format($total_loss_val, 2); ?></td>
                         </tr>
                     <?php else: ?>
                         <tr><td colspan="8" class="py-8 text-center text-slate-400">No expired medicines in the selected scope.</td></tr>
@@ -494,7 +494,7 @@ document.getElementById('toggleFilterBtn').addEventListener('click', function() 
                                         </span>
                                     <?php endif; ?>
                                 </td>
-                                <td class="py-3 text-end pr-5 font-mono font-bold text-slate-900">$<?php echo number_format($risk_val, 2); ?></td>
+                                <td class="py-3 text-end pr-5 font-mono font-bold text-slate-900">₹<?php echo number_format($risk_val, 2); ?></td>
                             </tr>
                         <?php endforeach; ?>
                         <!-- Summation Footer Row -->
@@ -502,7 +502,7 @@ document.getElementById('toggleFilterBtn').addEventListener('click', function() 
                             <td colspan="4" class="py-3.5 pl-5 text-slate-800 uppercase text-xs tracking-wider">Total At-Risk Valuation:</td>
                             <td class="py-3.5 text-center font-mono text-orange-800 text-sm"><?php echo number_format($total_risk_units); ?> units</td>
                             <td colspan="2"></td>
-                            <td class="py-3.5 text-end pr-5 font-mono text-orange-800 text-sm">$<?php echo number_format($total_risk_val, 2); ?></td>
+                            <td class="py-3.5 text-end pr-5 font-mono text-orange-800 text-sm">₹<?php echo number_format($total_risk_val, 2); ?></td>
                         </tr>
                     <?php else: ?>
                         <tr><td colspan="8" class="py-8 text-center text-slate-400">No medicines expiring within the specified horizon.</td></tr>
@@ -577,13 +577,13 @@ document.getElementById('toggleFilterBtn').addEventListener('click', function() 
                                     <span class="font-semibold block text-slate-800"><?php echo html_escape($row['user_name'] ?: 'System'); ?></span>
                                     <span class="font-mono text-[10px] text-slate-400"><?php echo html_escape($row['reference_no'] ?: 'N/A'); ?></span>
                                 </td>
-                                <td class="py-3 text-end pr-5 font-mono font-bold text-slate-900">$<?php echo number_format($tx_val, 2); ?></td>
+                                <td class="py-3 text-end pr-5 font-mono font-bold text-slate-900">₹<?php echo number_format($tx_val, 2); ?></td>
                             </tr>
                         <?php endforeach; ?>
                         <!-- Summation Footer Row -->
                         <tr class="bg-slate-100/80 font-bold border-t-2 border-slate-300">
                             <td colspan="8" class="py-3.5 pl-5 text-slate-800 uppercase text-xs tracking-wider">Total Transaction Volume:</td>
-                            <td class="py-3.5 text-end pr-5 font-mono text-purple-800 text-sm">$<?php echo number_format($total_activity_val, 2); ?></td>
+                            <td class="py-3.5 text-end pr-5 font-mono text-purple-800 text-sm">₹<?php echo number_format($total_activity_val, 2); ?></td>
                         </tr>
                     <?php else: ?>
                         <tr><td colspan="9" class="py-8 text-center text-slate-400">No stock activity entries found for the selected criteria.</td></tr>
