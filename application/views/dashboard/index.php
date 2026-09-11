@@ -5,17 +5,17 @@ $user_display_name = isset($current_user['name']) ? $current_user['name'] : 'Doc
 ?>
 
 <!-- Welcome Banner -->
-<div class="mb-8 rounded-3xl bg-gradient-to-r from-emerald-200 via-emerald-300 to-emerald-400 p-6 sm:p-8 text-emerald-950 shadow-xl shadow-emerald-300/30 relative overflow-hidden">
+<div class="dashboard-welcome-banner mb-6 rounded-3xl bg-white border border-emerald-200 p-4 sm:p-5 text-slate-800 shadow-lg shadow-emerald-950/5 relative overflow-hidden">
     <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div>
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-700/20 border border-emerald-400/30 text-xs font-semibold text-emerald-900 mb-3 backdrop-blur-sm">
-                <i class="fa-solid fa-heart-pulse text-emerald-700"></i>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 mb-2">
+                <i class="fa-solid fa-heart-pulse text-emerald-600"></i>
                 <span>Pharmacy Live Dashboard &bull; <?php echo date('l, d F Y'); ?></span>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-emerald-950 mb-2">
+            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-emerald-950 mb-1">
                 Welcome back, <?php echo html_escape($user_display_name); ?>!
             </h2>
-            <p class="text-emerald-900 text-xs sm:text-sm max-w-xl mb-0 leading-relaxed">
+            <p class="text-slate-600 text-xs sm:text-sm max-w-xl mb-0 leading-relaxed">
                 Live pharmaceutical inventory overview, stock movement audits, and prescription dispensary activity.
             </p>
         </div>
@@ -24,8 +24,8 @@ $user_display_name = isset($current_user['name']) ? $current_user['name'] : 'Doc
                 <i class="fa-solid fa-plus text-emerald-600"></i>
                 <span>Add Medicine</span>
             </a>
-            <a href="<?php echo base_url('stock/create'); ?>" class="btn bg-emerald-700/30 text-emerald-950 font-semibold px-4 py-2.5 rounded-xl hover:bg-emerald-700/40 transition flex items-center gap-2 text-xs sm:text-sm border border-emerald-400/30 text-decoration-none">
-                <i class="fa-solid fa-boxes-stacked text-emerald-700"></i>
+            <a href="<?php echo base_url('stock/create'); ?>" class="btn bg-emerald-700 text-white font-semibold px-4 py-2.5 rounded-xl hover:bg-emerald-800 transition flex items-center gap-2 text-xs sm:text-sm border border-emerald-600 text-decoration-none">
+                <i class="fa-solid fa-boxes-stacked text-emerald-100"></i>
                 <span>New Stock In</span>
             </a>
         </div>
@@ -424,5 +424,3 @@ $user_display_name = isset($current_user['name']) ? $current_user['name'] : 'Doc
     </div>
 
 </div>
-
-

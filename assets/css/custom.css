@@ -260,6 +260,13 @@ main {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.dashboard-welcome-banner {
+  background: #ffffff !important;
+  border: 1px solid #bbf7d0 !important;
+  padding: 1.25rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
 .app-card-hover:hover,
 .card:hover,
 .dashboard-card:hover {
