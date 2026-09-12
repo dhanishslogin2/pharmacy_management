@@ -1,8 +1,11 @@
--- Empty database structure for the Pharmacy Management System.
--- This file intentionally contains no application data.
--- The target database must already exist before importing this file.
+-- Complete database structure for the Pharmacy Management System.
+-- Import this file first, then pharmacy_data.sql and pharmacy_demo_data.sql.
 
-USE `db_pharmacy`;
+CREATE DATABASE IF NOT EXISTS `pharmacy_db`
+  DEFAULT CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+USE `pharmacy_db`;
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

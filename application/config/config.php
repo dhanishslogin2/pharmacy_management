@@ -25,10 +25,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
 $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
-$script_name = isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : '/index.php';
-$base_path = str_replace('\\', '/', dirname($script_name));
-$base_path = ($base_path === '/' || $base_path === '.') ? '/' : trim($base_path, '/') . '/';
-$config['base_url'] = $protocol . '://' . $host . '/' . ltrim($base_path, '/');
+$script_name = isset($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : (isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : '/index.php');
+$script_name = str_replace('\\', '/', $script_name);
+$script_path = strstr($script_name, '/index.php', TRUE);
+$base_path = ($script_path === FALSE) ? dirname($script_name) : $script_path;
+$base_path = ($base_path === '/' || $base_path === '.' || $base_path === '\\') ? '' : trim($base_path, '/');
+$config['base_url'] = $protocol . '://' . $host . ($base_path !== '' ? '/' . $base_path : '') . '/';
 
 /*
 |--------------------------------------------------------------------------

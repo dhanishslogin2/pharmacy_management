@@ -1,7 +1,7 @@
 -- Seed data for the Pharmacy Management System.
 -- Import this file after pharmacy_structure.sql.
 
-USE `db_pharmacy`;
+USE `pharmacy_db`;
 
 INSERT IGNORE INTO `users` (`id`, `name`, `email`, `phone`, `address`, `password`, `role`, `status`) VALUES
 (1, 'Administrator', 'admin@pharmacare.com', NULL, NULL, '$2y$10$4xqh83bFE.JCuT2zKCeIZOp6U/K9TySbs1vHFoFE3LDXFFZZxYVAG', 'admin', 'active'),

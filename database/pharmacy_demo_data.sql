@@ -2,7 +2,7 @@
 -- Import after pharmacy_structure.sql and pharmacy_data.sql.
 -- Reference date for expiry scenarios: 2026-09-12.
 
-USE `db_pharmacy`;
+USE `pharmacy_db`;
 
 INSERT IGNORE INTO `users` (`id`, `name`, `email`, `phone`, `address`, `password`, `role`, `status`) VALUES
 (4, 'Aisha Khan', 'aisha.khan@example.com', '+91 9876543210', '18 Lake View Road, Delhi', '$2y$10$4xqh83bFE.JCuT2zKCeIZOp6U/K9TySbs1vHFoFE3LDXFFZZxYVAG', 'customer', 'active'),
