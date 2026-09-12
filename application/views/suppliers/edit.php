@@ -55,10 +55,16 @@
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">Phone</label>
 
-                        <input type="text"
+                           <input type="tel"
                                name="phone"
                                class="form-control"
-                               value="<?= set_value('phone', $supplier->phone); ?>">
+                               placeholder="+91 9876543210"
+                               value="<?= set_value('phone', $supplier->phone); ?>"
+                               maxlength="14"
+                               inputmode="tel"
+                               pattern="\+91[ \-]?[6-9][0-9]{9}"
+                               title="Use +91 followed by exactly 10 digits."
+                               required>
 
                         <small class="text-danger"><?= form_error('phone'); ?></small>
                     </div>

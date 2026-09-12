@@ -114,10 +114,10 @@ class Customers extends MY_Controller {
         }
 
         $customer_data = array(
-            'name'       => trim($this->input->post('name', TRUE)),
-            'email'      => trim($this->input->post('email', TRUE)),
-            'phone'      => trim($this->input->post('phone', TRUE)),
-            'address'    => trim($this->input->post('address', TRUE)),
+            'name'       => trim((string) $this->input->post('name', TRUE)),
+            'email'      => trim((string) $this->input->post('email', TRUE)),
+            'phone'      => trim((string) $this->input->post('phone', TRUE)),
+            'address'    => trim((string) $this->input->post('address', TRUE)),
             'status'     => $this->input->post('status') ? $this->input->post('status') : 'active',
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
@@ -181,10 +181,10 @@ class Customers extends MY_Controller {
         }
 
         $customer_data = array(
-            'name'       => trim($this->input->post('name', TRUE)),
-            'email'      => trim($this->input->post('email', TRUE)),
-            'phone'      => trim($this->input->post('phone', TRUE)),
-            'address'    => trim($this->input->post('address', TRUE)),
+            'name'       => trim((string) $this->input->post('name', TRUE)),
+            'email'      => trim((string) $this->input->post('email', TRUE)),
+            'phone'      => trim((string) $this->input->post('phone', TRUE)),
+            'address'    => trim((string) $this->input->post('address', TRUE)),
             'status'     => $this->input->post('status') ? $this->input->post('status') : 'active',
             'updated_at' => date('Y-m-d H:i:s')
         );

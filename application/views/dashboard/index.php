@@ -1,7 +1,6 @@
 ﻿<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$user_display_name = isset($current_user['name']) ? $current_user['name'] : 'Doctor';
 ?>
 
 <!-- Welcome Banner -->
@@ -12,9 +11,6 @@ $user_display_name = isset($current_user['name']) ? $current_user['name'] : 'Doc
                 <i class="fa-solid fa-heart-pulse text-emerald-600"></i>
                 <span>Pharmacy Live Dashboard &bull; <?php echo date('l, d F Y'); ?></span>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-emerald-950 mb-1">
-                Welcome back, <?php echo html_escape($user_display_name); ?>!
-            </h2>
             <p class="text-slate-600 text-xs sm:text-sm max-w-xl mb-0 leading-relaxed">
                 Live pharmaceutical inventory overview, stock movement audits, and prescription dispensary activity.
             </p>

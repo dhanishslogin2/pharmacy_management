@@ -47,10 +47,11 @@ window.showToast = function (message, type = 'success', title = '') {
   container.appendChild(toast);
 
   function dismissToast() {
+    if (toast.classList.contains('toast-hiding')) return;
     toast.classList.add('toast-hiding');
-    toast.addEventListener('animationend', () => {
-      toast.remove();
-    });
+    const removeToast = () => toast.remove();
+    toast.addEventListener('animationend', removeToast, { once: true });
+    setTimeout(removeToast, 300);
   }
 
   const closeBtn = toast.querySelector('.toast-close');
@@ -133,23 +134,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 3. Form Validation & Submit Loading Spinners
   const forms = document.querySelectorAll('.needs-validation, form');
-  document.querySelectorAll('#createCustomerForm, #editCustomerForm').forEach(customerForm => {
-    const phone = customerForm.querySelector('input[name="phone"]');
-    if (!phone) return;
-
-    const validateCustomerPhone = () => {
+  document.querySelectorAll('input[type="tel"][name="phone"], input[type="tel"][name="customer_phone"]').forEach(phone => {
+    const validatePhone = () => {
       const value = phone.value.trim();
       if (value === '') {
-        phone.setCustomValidity('');
+        phone.setCustomValidity(phone.required ? 'Phone number is required.' : '');
         return;
       }
       const valid = /^\+91[ -]?[6-9][0-9]{9}$/.test(value);
-      phone.setCustomValidity(valid ? '' : 'Use +91 and exactly 10 digits.');
+      phone.setCustomValidity(valid ? '' : 'Use +91 followed by exactly 10 digits.');
     };
 
-    phone.addEventListener('input', validateCustomerPhone);
-    phone.addEventListener('blur', validateCustomerPhone);
-    validateCustomerPhone();
+    phone.addEventListener('input', validatePhone);
+    phone.addEventListener('blur', validatePhone);
+    validatePhone();
   });
 
   forms.forEach(form => {
@@ -190,9 +188,32 @@ document.addEventListener('DOMContentLoaded', function () {
   // 6. Instant Table Filter
   initTableInstantSearch();
 
-  // 7. Auto Flash Message Toast Notification Trigger
+  // 7. Add field selectors to every data table
+  initTableFieldVisibilityMenus();
+
+  // 8. Toggle table fields without reloading the page
+  initColumnVisibilityFilters();
+
+  // 9. Auto-dismiss page alerts and use the toast only when no page alert exists
+  const pageAlerts = document.querySelectorAll('.alert.alert-dismissible');
+  pageAlerts.forEach(alert => {
+    const closeAlert = () => {
+      alert.classList.remove('show');
+      alert.classList.add('fade');
+      setTimeout(() => alert.remove(), 250);
+    };
+
+    const closeButton = alert.querySelector('[data-bs-dismiss="alert"], .btn-close');
+    if (closeButton) {
+      closeButton.addEventListener('click', closeAlert);
+    }
+
+    setTimeout(closeAlert, 5000);
+  });
+
+  // 10. Auto Flash Message Toast Notification Trigger
   const flashToastElem = document.getElementById('flash-toast-trigger');
-  if (flashToastElem) {
+  if (flashToastElem && pageAlerts.length === 0) {
     const flashSuccess = flashToastElem.getAttribute('data-success');
     const flashError = flashToastElem.getAttribute('data-error');
     if (flashSuccess) {
@@ -305,5 +326,66 @@ function initTableInstantSearch() {
         }
       });
     });
+  });
+}
+
+function initColumnVisibilityFilters() {
+  document.querySelectorAll('[data-column-visibility]').forEach(panel => {
+    const table = document.querySelector(panel.getAttribute('data-column-visibility'));
+    if (!table) return;
+
+    panel.querySelectorAll('input[data-column]').forEach(input => {
+      const updateColumn = () => {
+        const column = input.getAttribute('data-column');
+        const visible = input.checked;
+        table.querySelectorAll(`[data-column="${column}"]`).forEach(cell => {
+          cell.style.display = visible ? '' : 'none';
+        });
+      };
+
+      input.addEventListener('change', updateColumn);
+      updateColumn();
+    });
+  });
+}
+
+function initTableFieldVisibilityMenus() {
+  document.querySelectorAll('table').forEach((table, tableIndex) => {
+    const headers = Array.from(table.querySelectorAll(':scope > thead > tr > th'));
+    if (headers.length < 2) return;
+
+    if (!table.id) {
+      table.id = `table-field-visibility-${tableIndex + 1}`;
+    }
+
+    headers.forEach((header, columnIndex) => {
+      const column = header.getAttribute('data-column') || `column-${columnIndex}`;
+      header.setAttribute('data-column', column);
+      table.querySelectorAll(`:scope > tbody > tr > td:nth-child(${columnIndex + 1})`).forEach(cell => {
+        cell.setAttribute('data-column', column);
+      });
+    });
+
+    const existingPanel = document.querySelector(`[data-column-visibility="#${table.id}"]`);
+    if (existingPanel) return;
+
+    const menu = document.createElement('details');
+    menu.className = 'column-visibility-menu table-generated-visibility-menu';
+    menu.innerHTML = `
+      <summary class="btn btn-light btn-sm rounded-xl px-3 py-2 text-xs font-semibold border border-slate-200 text-slate-600">
+        <i class="fa-solid fa-table-columns mr-1"></i> Visible Fields
+      </summary>
+      <div class="column-visibility-panel" data-column-visibility="#${table.id}">
+        <div class="column-visibility-heading">Show fields</div>
+        ${headers.map(header => {
+          const column = header.getAttribute('data-column');
+          const label = header.textContent.replace(/\s+/g, ' ').trim();
+          return `<label><input type="checkbox" data-column="${column}" checked> ${label}</label>`;
+        }).join('')}
+      </div>
+    `;
+
+    const tableWrapper = table.closest('.table-responsive') || table;
+    tableWrapper.parentNode.insertBefore(menu, tableWrapper);
   });
 }

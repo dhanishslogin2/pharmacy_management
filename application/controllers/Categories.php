@@ -115,8 +115,8 @@ class Categories extends MY_Controller {
         }
 
         $category_data = array(
-            'name'        => trim($this->input->post('name', TRUE)),
-            'description' => trim($this->input->post('description', TRUE)),
+            'name'        => trim((string) $this->input->post('name', TRUE)),
+            'description' => trim((string) $this->input->post('description', TRUE)),
             'status'      => $this->input->post('status') ? $this->input->post('status') : 'active',
             'created_at'  => date('Y-m-d H:i:s')
         );
@@ -179,8 +179,8 @@ class Categories extends MY_Controller {
         }
 
         $category_data = array(
-            'name'        => trim($this->input->post('name', TRUE)),
-            'description' => trim($this->input->post('description', TRUE)),
+            'name'        => trim((string) $this->input->post('name', TRUE)),
+            'description' => trim((string) $this->input->post('description', TRUE)),
             'status'      => $this->input->post('status') ? $this->input->post('status') : 'active',
             'updated_at'  => date('Y-m-d H:i:s')
         );

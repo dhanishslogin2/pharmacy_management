@@ -70,6 +70,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <i class="fa-solid fa-rotate-left"></i>
             </a>
         </div>
+
+        <!-- 4. Choose Visible Fields -->
+        <div class="sm:col-span-12 flex justify-end">
+            <details class="column-visibility-menu">
+                <summary class="btn btn-light btn-sm rounded-xl px-3 py-2 text-xs font-semibold border border-slate-200 text-slate-600">
+                    <i class="fa-solid fa-table-columns mr-1"></i>
+                    Visible Fields
+                </summary>
+                <div class="column-visibility-panel" data-column-visibility="#medicinesTable">
+                    <div class="column-visibility-heading">Show fields</div>
+                    <label><input type="checkbox" data-column="medicine" checked> Medicine</label>
+                    <label><input type="checkbox" data-column="category" checked> Category</label>
+                    <label><input type="checkbox" data-column="supplier" checked> Supplier</label>
+                    <label><input type="checkbox" data-column="price" checked> Price</label>
+                    <label><input type="checkbox" data-column="stock" checked> Stock Qty</label>
+                    <label><input type="checkbox" data-column="expiry" checked> Expiry Date</label>
+                    <label><input type="checkbox" data-column="status" checked> Status</label>
+                </div>
+            </details>
+        </div>
     </form>
 </div>
 
@@ -79,13 +99,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <table class="table table-hover align-middle mb-0 text-xs sm:text-sm" id="medicinesTable">
             <thead class="table-light text-[11px] text-slate-500 font-bold uppercase tracking-wider border-b border-slate-200">
                 <tr>
-                    <th class="sortable py-3.5 pl-4" data-sort="text">Medicine</th>
-                    <th class="sortable py-3.5" data-sort="text">Category</th>
-                    <th class="sortable py-3.5" data-sort="text">Supplier / Brand</th>
-                    <th class="sortable py-3.5 text-end" data-sort="number">Price</th>
-                    <th class="sortable py-3.5 text-center" data-sort="number">Stock Qty</th>
-                    <th class="sortable py-3.5" data-sort="date">Expiry Date</th>
-                    <th class="sortable py-3.5 text-center" data-sort="text">Status</th>
+                    <th class="sortable py-3.5 pl-4" data-column="medicine" data-sort="text">Medicine</th>
+                    <th class="sortable py-3.5" data-column="category" data-sort="text">Category</th>
+                    <th class="sortable py-3.5" data-column="supplier" data-sort="text">Supplier / Brand</th>
+                    <th class="sortable py-3.5 text-end" data-column="price" data-sort="number">Price</th>
+                    <th class="sortable py-3.5 text-center" data-column="stock" data-sort="number">Stock Qty</th>
+                    <th class="sortable py-3.5" data-column="expiry" data-sort="date">Expiry Date</th>
+                    <th class="sortable py-3.5 text-center" data-column="status" data-sort="text">Status</th>
                     <th class="py-3.5 text-end pr-4">Actions</th>
                 </tr>
             </thead>
@@ -99,7 +119,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         $is_expiring_soon = ($exp_date && !$is_expired && strtotime($exp_date) <= strtotime('+30 days'));
                         
                         // Status badge logic
-                        if ($med['status'] === 'inactive') {
+                        if ($stock === 0) {
+                            $status_label = 'Out of Stock';
+                            $status_class = 'bg-slate-100 text-slate-700 border-slate-200';
+                            $status_icon = 'fa-ban';
+                        } elseif ($med['status'] === 'inactive') {
                             $status_label = 'Inactive';
                             $status_class = 'bg-slate-100 text-slate-600 border-slate-200';
                             $status_icon = 'fa-circle-pause';
@@ -107,10 +131,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             $status_label = 'Expired';
                             $status_class = 'bg-rose-100 text-rose-800 border-rose-200';
                             $status_icon = 'fa-circle-xmark';
-                        } elseif ($stock === 0) {
-                            $status_label = 'Out of Stock';
-                            $status_class = 'bg-slate-100 text-slate-700 border-slate-200';
-                            $status_icon = 'fa-ban';
                         } elseif ($is_expiring_soon) {
                             $status_label = 'Expiring Soon';
                             $status_class = 'bg-purple-100 text-purple-800 border-purple-200';
@@ -129,7 +149,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         ?>
                         <tr class="hover:bg-slate-50/80 transition-colors">
                             <!-- Medicine Name & Thumbnail -->
-                            <td class="py-3 pl-4">
+                            <td class="py-3 pl-4" data-column="medicine">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 overflow-hidden shrink-0">
                                         <img src="<?php echo html_escape($image_src); ?>" 
@@ -151,24 +171,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </td>
 
                             <!-- Category -->
-                            <td class="py-3">
+                            <td class="py-3" data-column="category">
                                 <span class="badge bg-slate-100 text-slate-700 border border-slate-200 font-medium text-[11px] px-2 py-0.5 rounded-md">
                                     <?php echo html_escape($med['category_name'] ?? 'Unassigned'); ?>
                                 </span>
                             </td>
 
                             <!-- Supplier / Brand -->
-                            <td class="py-3 text-slate-600 text-xs">
+                            <td class="py-3 text-slate-600 text-xs" data-column="supplier">
                                 <?php echo html_escape($med['supplier_name'] ?? 'Direct / Generic'); ?>
                             </td>
 
                             <!-- Price -->
-                            <td class="py-3 text-end font-mono text-xs font-bold text-emerald-700">
+                            <td class="py-3 text-end font-mono text-xs font-bold text-emerald-700" data-column="price">
                                 ₹<?php echo number_format((float)$med['price'], 2); ?>
                             </td>
 
                             <!-- Stock Quantity -->
-                            <td class="py-3 text-center">
+                            <td class="py-3 text-center" data-column="stock">
                                 <span class="font-bold text-sm font-mono <?php echo ($stock <= 10) ? 'text-rose-600' : 'text-slate-800'; ?>">
                                     <?php echo $stock; ?>
                                 </span>
@@ -176,7 +196,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </td>
 
                             <!-- Expiry Date -->
-                            <td class="py-3 text-xs font-mono">
+                            <td class="py-3 text-xs font-mono" data-column="expiry">
                                 <span class="<?php echo $is_expired ? 'text-rose-600 font-bold' : ($is_expiring_soon ? 'text-purple-600 font-bold' : 'text-slate-700'); ?>">
                                     <?php echo date('M d, Y', strtotime($exp_date)); ?>
                                 </span>
@@ -188,7 +208,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </td>
 
                             <!-- Status Badge -->
-                            <td class="py-3 text-center">
+                            <td class="py-3 text-center" data-column="status">
                                 <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold border <?php echo $status_class; ?>">
                                     <i class="fa-solid <?php echo $status_icon; ?> text-[10px]"></i>
                                     <span><?php echo $status_label; ?></span>

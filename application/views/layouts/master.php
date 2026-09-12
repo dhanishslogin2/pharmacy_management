@@ -37,42 +37,6 @@ $this->load->view('layouts/sidebar', $layout_data);
     <main class="flex-1 p-4 sm:p-6 lg:p-8">
         <div class="max-w-7xl mx-auto w-full">
 
-            <!-- Success Flash Message -->
-            <?php if ($this->session->flashdata('success')): ?>
-                <div class="alert alert-success alert-dismissible fade show rounded-2xl mb-6 flex items-center gap-3" role="alert">
-                    <div class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center">
-                        <i class="fa-solid fa-circle-check"></i>
-                    </div>
-
-                    <div class="flex-1">
-                        <?php echo $this->session->flashdata('success'); ?>
-                    </div>
-
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="alert"
-                            aria-label="Close"></button>
-                </div>
-            <?php endif; ?>
-
-            <!-- Error Flash Message -->
-            <?php if ($this->session->flashdata('error')): ?>
-                <div class="alert alert-danger alert-dismissible fade show rounded-2xl mb-6 flex items-center gap-3" role="alert">
-                    <div class="w-8 h-8 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center">
-                        <i class="fa-solid fa-circle-exclamation"></i>
-                    </div>
-
-                    <div class="flex-1">
-                        <?php echo $this->session->flashdata('error'); ?>
-                    </div>
-
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="alert"
-                            aria-label="Close"></button>
-                </div>
-            <?php endif; ?>
-
             <!-- Dynamic Content View -->
             <?php
             if (!empty($content_view)) {

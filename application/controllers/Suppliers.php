@@ -61,7 +61,7 @@ public function store()
     $this->form_validation->set_rules('name', 'Supplier Name', 'required|trim');
     $this->form_validation->set_rules('contact_person', 'Contact Person', 'required|trim');
     $this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim');
-    $this->form_validation->set_rules('phone', 'Phone', 'required|trim');
+    $this->form_validation->set_rules('phone', 'Phone', 'required|trim|max_length[14]|callback_validate_phone');
     $this->form_validation->set_rules('address', 'Address', 'required|trim');
     $this->form_validation->set_rules('status', 'Status', 'required');
 
@@ -154,7 +154,7 @@ public function update($id)
     $this->form_validation->set_rules('name', 'Supplier Name', 'required|trim');
     $this->form_validation->set_rules('contact_person', 'Contact Person', 'required|trim');
     $this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim');
-    $this->form_validation->set_rules('phone', 'Phone', 'required|trim');
+    $this->form_validation->set_rules('phone', 'Phone', 'required|trim|max_length[14]|callback_validate_phone');
     $this->form_validation->set_rules('address', 'Address', 'required|trim');
     $this->form_validation->set_rules('status', 'Status', 'required');
 
@@ -195,6 +195,17 @@ public function update($id)
     }
 
     redirect('suppliers');
+}
+
+public function validate_phone($phone)
+{
+    $phone = trim((string) $phone);
+    if (!preg_match('/^\+91[ -]?[6-9][0-9]{9}$/', $phone)) {
+        $this->form_validation->set_message('validate_phone', 'Use +91 followed by exactly 10 digits.');
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
 }

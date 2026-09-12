@@ -88,6 +88,8 @@ abstract class CI_DB_driver {
 	 */
 	public $database;
 
+	public $failover = array();
+
 	/**
 	 * Database driver
 	 *

@@ -19,7 +19,9 @@ $image_src = !empty($medicine->image_url) ? $medicine->image_url : 'https://imag
             <h2 class="text-2xl font-bold text-slate-900 mb-0">
                 <?php echo html_escape($medicine->medicine_name); ?>
             </h2>
-            <?php if ($medicine->status === 'active'): ?>
+            <?php if ($stock === 0): ?>
+                <span class="badge bg-slate-100 text-slate-700 font-semibold px-2.5 py-1 rounded-full text-xs">Out of Stock</span>
+            <?php elseif ($medicine->status === 'active'): ?>
                 <span class="badge bg-emerald-100 text-emerald-800 font-semibold px-2.5 py-1 rounded-full text-xs">Active</span>
             <?php else: ?>
                 <span class="badge bg-slate-100 text-slate-600 font-semibold px-2.5 py-1 rounded-full text-xs">Inactive</span>

@@ -130,15 +130,21 @@ class Sales extends MY_Controller {
     public function store() {
         // Validate Primary Sale Headers
         $customer_id = $this->input->post('customer_id', TRUE);
-        $customer_name = trim($this->input->post('customer_name', TRUE));
-        $customer_phone = trim($this->input->post('customer_phone', TRUE));
+        $customer_name = trim((string) $this->input->post('customer_name', TRUE));
+        $customer_phone = trim((string) $this->input->post('customer_phone', TRUE));
         $payment_method = $this->input->post('payment_method', TRUE) ?: 'cash';
         $payment_status = $this->input->post('payment_status', TRUE) ?: 'paid';
         $sale_date = $this->input->post('sale_date', TRUE) ?: date('Y-m-d');
         $discount = (float) ($this->input->post('discount', TRUE) ?: 0.00);
         $tax = (float) ($this->input->post('tax', TRUE) ?: 0.00);
-        $notes = trim($this->input->post('notes', TRUE));
-        $invoice_no = trim($this->input->post('invoice_no', TRUE)) ?: $this->Sale_model->generate_invoice_no();
+        $notes = trim((string) $this->input->post('notes', TRUE));
+        $invoice_no = trim((string) $this->input->post('invoice_no', TRUE)) ?: $this->Sale_model->generate_invoice_no();
+
+        if ($customer_phone !== '' && !preg_match('/^\+91[ -]?[6-9][0-9]{9}$/', $customer_phone)) {
+            $this->session->set_flashdata('error', 'Use +91 followed by exactly 10 digits for the customer phone.');
+            redirect('sales/create');
+            return;
+        }
 
         // If customer_id is provided, auto-fill details from customer profile if missing
         if (!empty($customer_id)) {

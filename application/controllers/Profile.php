@@ -51,7 +51,7 @@ class Profile extends MY_Controller {
         }
 
         $user_id = $this->session->userdata('user_id');
-        $email = trim($this->input->post('email', TRUE));
+        $email = trim((string) $this->input->post('email', TRUE));
         $existing = $this->Auth_model->get_user_by_id($user_id);
         $email_owner = $this->db->get_where('users', array('email' => $email))->row();
 
@@ -62,7 +62,7 @@ class Profile extends MY_Controller {
         }
 
         $data = array(
-            'name' => trim($this->input->post('name', TRUE)),
+            'name' => trim((string) $this->input->post('name', TRUE)),
             'email' => $email
         );
         $password = $this->input->post('password', TRUE);

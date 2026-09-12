@@ -67,11 +67,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">Phone Number</label>
 
-                        <input type="text"
+                           <input type="tel"
                                name="phone"
                                class="form-control"
-                               placeholder="+91 XXXXX XXXXX"
-                               value="<?= set_value('phone'); ?>">
+                               placeholder="+91 9876543210"
+                               value="<?= set_value('phone'); ?>"
+                               maxlength="14"
+                               inputmode="tel"
+                               pattern="\+91[ \-]?[6-9][0-9]{9}"
+                               title="Use +91 followed by exactly 10 digits."
+                               required>
 
                         <small class="text-danger"><?= form_error('phone'); ?></small>
                     </div>

@@ -16,12 +16,10 @@ $current_menu = isset($active_menu) ? $active_menu : $this->uri->segment(1, 'das
                 <div class="sidebar-brand-mark w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-700 to-emerald-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform duration-200">
                     <i class="fa-solid fa-staff-snake text-xl"></i>
                 </div>
-                <div>
+                <div class="sidebar-brand-copy">
                     <div class="flex items-center gap-1.5">
                         <span class="font-bold text-lg text-slate-900 tracking-tight">Pharma<span class="text-emerald-600">Care</span></span>
-                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800">PRO</span>
                     </div>
-                    <p class="text-[11px] text-slate-400 font-medium mb-0 leading-none">Management v2.0</p>
                 </div>
             </a>
             

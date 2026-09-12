@@ -146,7 +146,7 @@ class Stock extends MY_Controller {
             'quantity'       => (int) $this->input->post('quantity', TRUE),
             'purchase_price' => (float) $this->input->post('purchase_price', TRUE),
             'purchase_date'  => $this->input->post('purchase_date', TRUE) ?: date('Y-m-d'),
-            'notes'          => trim($this->input->post('notes', TRUE)),
+            'notes'          => trim((string) $this->input->post('notes', TRUE)),
             'created_at'     => date('Y-m-d H:i:s')
         );
 
@@ -215,7 +215,7 @@ class Stock extends MY_Controller {
             'quantity'       => (int) $this->input->post('quantity', TRUE),
             'purchase_price' => (float) $this->input->post('purchase_price', TRUE),
             'purchase_date'  => $this->input->post('purchase_date', TRUE),
-            'notes'          => trim($this->input->post('notes', TRUE)),
+            'notes'          => trim((string) $this->input->post('notes', TRUE)),
             'updated_at'     => date('Y-m-d H:i:s')
         );
 

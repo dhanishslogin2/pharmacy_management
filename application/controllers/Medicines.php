@@ -122,14 +122,14 @@ class Medicines extends MY_Controller {
         }
 
         $medicine_data = array(
-            'medicine_name'  => trim($this->input->post('medicine_name', TRUE)),
+            'medicine_name'  => trim((string) $this->input->post('medicine_name', TRUE)),
             'category_id'    => (int) $this->input->post('category_id', TRUE),
             'supplier_id'    => !empty($this->input->post('supplier_id')) ? (int) $this->input->post('supplier_id') : NULL,
-            'description'    => trim($this->input->post('description', TRUE)),
+            'description'    => trim((string) $this->input->post('description', TRUE)),
             'price'          => (float) $this->input->post('price', TRUE),
             'stock_quantity' => (int) $this->input->post('stock_quantity', TRUE),
-            'expiry_date'    => trim($this->input->post('expiry_date', TRUE)),
-            'image_url'      => trim($this->input->post('image_url', TRUE)) ?: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&auto=format&fit=crop&q=80',
+            'expiry_date'    => trim((string) $this->input->post('expiry_date', TRUE)),
+            'image_url'      => trim((string) $this->input->post('image_url', TRUE)) ?: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&auto=format&fit=crop&q=80',
             'status'         => $this->input->post('status') ? $this->input->post('status') : 'active',
             'created_at'     => date('Y-m-d H:i:s')
         );
@@ -194,14 +194,14 @@ class Medicines extends MY_Controller {
         }
 
         $medicine_data = array(
-            'medicine_name'  => trim($this->input->post('medicine_name', TRUE)),
+            'medicine_name'  => trim((string) $this->input->post('medicine_name', TRUE)),
             'category_id'    => (int) $this->input->post('category_id', TRUE),
             'supplier_id'    => !empty($this->input->post('supplier_id')) ? (int) $this->input->post('supplier_id') : NULL,
-            'description'    => trim($this->input->post('description', TRUE)),
+            'description'    => trim((string) $this->input->post('description', TRUE)),
             'price'          => (float) $this->input->post('price', TRUE),
             'stock_quantity' => (int) $this->input->post('stock_quantity', TRUE),
-            'expiry_date'    => trim($this->input->post('expiry_date', TRUE)),
-            'image_url'      => trim($this->input->post('image_url', TRUE)) ?: $medicine->image_url,
+            'expiry_date'    => trim((string) $this->input->post('expiry_date', TRUE)),
+            'image_url'      => trim((string) $this->input->post('image_url', TRUE)) ?: $medicine->image_url,
             'status'         => $this->input->post('status') ? $this->input->post('status') : 'active',
             'updated_at'     => date('Y-m-d H:i:s')
         );

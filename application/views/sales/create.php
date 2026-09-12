@@ -83,7 +83,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <label for="customer_name" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
                             Customer Name <span class="text-rose-500">*</span>
                         </label>
-                        <input type="text" 
+                        <input type="tel" 
                                name="customer_name" 
                                id="customer_name" 
                                required 
@@ -101,7 +101,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                name="customer_phone" 
                                id="customer_phone" 
                                class="form-control text-xs sm:text-sm rounded-xl border-slate-200 focus:border-emerald-500" 
-                               placeholder="e.g. +1 555-0199">
+                               placeholder="e.g. +91 9876543210"
+                               maxlength="14"
+                               inputmode="tel"
+                               pattern="\+91[ \-]?[6-9][0-9]{9}"
+                               title="Use +91 followed by exactly 10 digits.">
                     </div>
 
                     <!-- Sale Date -->
