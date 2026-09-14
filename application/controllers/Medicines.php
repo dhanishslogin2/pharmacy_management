@@ -37,7 +37,7 @@ class Medicines extends MY_Controller {
         $offset = ($page > 0) ? ($page - 1) * $per_page : 0;
 
         // Total count for pagination
-        $total_rows = $this->Medicine_model->count_medicines($search, $category_id);
+        $total_rows = $this->Medicine_model->count_medicines($search, $category_id, 'active');
 
         // Pagination Configuration
         $config['base_url']             = base_url('medicines');
@@ -71,7 +71,7 @@ class Medicines extends MY_Controller {
 
         $this->pagination->initialize($config);
 
-        $medicines = $this->Medicine_model->get_medicines($per_page, $offset, $search, $category_id);
+        $medicines = $this->Medicine_model->get_medicines($per_page, $offset, $search, $category_id, 'active');
         $categories = $this->Category_model->get_active_categories();
 
         $data = array(

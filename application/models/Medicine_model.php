@@ -18,10 +18,11 @@ class Medicine_model extends CI_Model {
      * @param int $limit
      * @param int $offset
      * @param string|null $search
-     * @param int|null $category_id
+    * @param int|null $category_id
+    * @param string|null $status
      * @return array
      */
-    public function get_medicines($limit = 10, $offset = 0, $search = null, $category_id = null) {
+    public function get_medicines($limit = 10, $offset = 0, $search = null, $category_id = null, $status = null) {
         try {
             $this->db->select('
                 m.id,
@@ -59,6 +60,10 @@ class Medicine_model extends CI_Model {
                 $this->db->where('m.category_id', (int) $category_id);
             }
 
+            if (!empty($status)) {
+                $this->db->where('m.status', $status);
+            }
+
             $this->db->order_by('m.id', 'DESC');
             $this->db->limit((int) $limit, (int) $offset);
 
@@ -74,10 +79,11 @@ class Medicine_model extends CI_Model {
      * Count total filtered medicines for pagination
      *
      * @param string|null $search
-     * @param int|null $category_id
+    * @param int|null $category_id
+    * @param string|null $status
      * @return int
      */
-    public function count_medicines($search = null, $category_id = null) {
+    public function count_medicines($search = null, $category_id = null, $status = null) {
         try {
             $this->db->from('medicines m');
             $this->db->join('categories c', 'c.id = m.category_id', 'left');
@@ -95,6 +101,10 @@ class Medicine_model extends CI_Model {
 
             if (!empty($category_id)) {
                 $this->db->where('m.category_id', (int) $category_id);
+            }
+
+            if (!empty($status)) {
+                $this->db->where('m.status', $status);
             }
 
             return (int) $this->db->count_all_results();

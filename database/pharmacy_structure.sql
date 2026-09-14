@@ -1,11 +1,11 @@
 -- Complete database structure for the Pharmacy Management System.
 -- Import this file first, then pharmacy_data.sql and pharmacy_demo_data.sql.
 
-CREATE DATABASE IF NOT EXISTS `pharmacy_db`
+CREATE DATABASE IF NOT EXISTS `db_pharmacy`
   DEFAULT CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
-USE `pharmacy_db`;
+USE `db_pharmacy`;
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

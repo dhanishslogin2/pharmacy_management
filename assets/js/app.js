@@ -334,18 +334,45 @@ function initColumnVisibilityFilters() {
     const table = document.querySelector(panel.getAttribute('data-column-visibility'));
     if (!table) return;
 
-    panel.querySelectorAll('input[data-column]').forEach(input => {
-      const updateColumn = () => {
+    const inputs = Array.from(panel.querySelectorAll('input[data-column]'));
+    const allFieldsInput = panel.querySelector('input[data-all-fields]');
+
+    const updateColumns = () => {
+      inputs.forEach(input => {
         const column = input.getAttribute('data-column');
-        const visible = input.checked;
         table.querySelectorAll(`[data-column="${column}"]`).forEach(cell => {
-          cell.style.display = visible ? '' : 'none';
+          cell.style.display = input.checked ? '' : 'none';
         });
+      });
+    };
+
+    const syncAllFieldsInput = () => {
+      if (!allFieldsInput) return;
+      allFieldsInput.checked = inputs.length > 0 && inputs.every(input => input.checked);
+      allFieldsInput.indeterminate = false;
+    };
+
+    inputs.forEach(input => {
+      const updateColumn = () => {
+        updateColumns();
+        syncAllFieldsInput();
       };
 
       input.addEventListener('change', updateColumn);
-      updateColumn();
     });
+
+    if (allFieldsInput) {
+      allFieldsInput.addEventListener('change', () => {
+        inputs.forEach(input => {
+          input.checked = allFieldsInput.checked;
+        });
+        updateColumns();
+        syncAllFieldsInput();
+      });
+    }
+
+    updateColumns();
+    syncAllFieldsInput();
   });
 }
 
@@ -361,22 +388,28 @@ function initTableFieldVisibilityMenus() {
     headers.forEach((header, columnIndex) => {
       const column = header.getAttribute('data-column') || `column-${columnIndex}`;
       header.setAttribute('data-column', column);
-      table.querySelectorAll(`:scope > tbody > tr > td:nth-child(${columnIndex + 1})`).forEach(cell => {
+      table.querySelectorAll(`tbody > tr > td:nth-child(${columnIndex + 1}), tfoot > tr > td:nth-child(${columnIndex + 1})`).forEach(cell => {
         cell.setAttribute('data-column', column);
       });
     });
 
-    const existingPanel = document.querySelector(`[data-column-visibility="#${table.id}"]`);
-    if (existingPanel) return;
+    let existingPanel = document.querySelector(`[data-column-visibility="#${table.id}"]`);
+    let menu = existingPanel ? existingPanel.closest('details') : null;
 
-    const menu = document.createElement('details');
-    menu.className = 'column-visibility-menu table-generated-visibility-menu';
+    if (!menu) {
+      menu = document.createElement('details');
+      menu.className = 'column-visibility-menu table-generated-visibility-menu';
+      const tableWrapper = table.closest('.table-responsive') || table;
+      tableWrapper.parentNode.insertBefore(menu, tableWrapper);
+    }
+
     menu.innerHTML = `
       <summary class="btn btn-light btn-sm rounded-xl px-3 py-2 text-xs font-semibold border border-slate-200 text-slate-600">
         <i class="fa-solid fa-table-columns mr-1"></i> Visible Fields
       </summary>
       <div class="column-visibility-panel" data-column-visibility="#${table.id}">
         <div class="column-visibility-heading">Show fields</div>
+        <label class="column-visibility-all"><input type="checkbox" data-all-fields checked> All fields</label>
         ${headers.map(header => {
           const column = header.getAttribute('data-column');
           const label = header.textContent.replace(/\s+/g, ' ').trim();
@@ -384,8 +417,5 @@ function initTableFieldVisibilityMenus() {
         }).join('')}
       </div>
     `;
-
-    const tableWrapper = table.closest('.table-responsive') || table;
-    tableWrapper.parentNode.insertBefore(menu, tableWrapper);
   });
 }
